@@ -11,8 +11,6 @@ namespace LINQDemo
         {
             EmpDbContext dbcontext = new EmpDbContext();
 
-            Console.WriteLine("Hello World!");
-
             Console.WriteLine("");
 
             //Query 2
