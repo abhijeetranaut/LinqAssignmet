@@ -582,7 +582,7 @@ namespace LINQDemo
 
          
                  // Query 52
-                var empquery52 = from employee in db.Employees
+                var empquery52 = from employee in db.Employee
                              join incentives in dbcontext.Incentives
                             on employee.EmployeeId equals incentives.EmployeeId into employeeDepartment
                              from res in employeeDepartment.DefaultIfEmpty()
@@ -593,22 +593,34 @@ namespace LINQDemo
                              };
                 foreach (var i in empquery52)
                 {
-                    Console.WriteLine("EmployeeNaame" + i.EmployeeName + " " + "IncentiveAmount" + i.IncentiveAmount);
+                    Console.WriteLine("EmployeeNaame" + i.EmployeeName + " IncentiveAmount" + i.IncentiveAmount);
 
                 }
             // Query 54
-                var empquery54 = (from employee in dbcontext.Employees select emp.Salary).Take(2);
+                var empquery54 = (from employee in dbcontext.Employee select employee.Salary).Take(2);
                 foreach (var i in empquery54)
-                    Console.WriteLine("Salary :"+i);
+                    Console.WriteLine("Salary "+i);
              
             //Query 56
-                var empquery56 = (from employee in dbcontext.Employees orderby employee.Salary descending select employee.Salary).Skip(1).First();
-                Console.WriteLine("Second Highest Salary:" + empquery56);
+                var empquery56 = (from employee in dbcontext.Employee orderby employee.Salary descending select employee.Salary).Skip(1).First();
+                Console.WriteLine("Second Highest Salary" + empquery56);
 
              // Query 57
                 var num = Convert.ToInt32(Console.ReadLine());
                 var empquery57 = (from employee in dbcontext.Employee orderby employee.Salary descending select employee.Salary).Skip(num - 1).First();
-                Console.WriteLine("Nth highest Salary: " + empquery57);
+                Console.WriteLine("Nth highest Salary " + empquery57);
+            
+            // Query 58
+            var empquery58 =  (from employee in dbcontext.Employee select employee.FirstName).Union(from employee in dbcontext.Employee select employee.LastName);
+            foreach(var i in empquery58)
+                Console.WriteLine("First Name"+i.FirstName+"  LastName" +i.LastName)
+                
+               //Query 62
+                var empquery62 = (from employee in dbcontext.Employee select employee.EmployeeId).Minus(from incentives in dbcontext.Incentives select incentives.EmpRefId );
+                 foreach (var emp in empquery62)
+                    {
+                        Console.WriteLine(emp);
+                    }
         }
     }
 }
